@@ -21,12 +21,17 @@ public class RandomColorsPlugin : BaseUnityPlugin
     public ConfigEntry<bool> affectEnemyEntry;
     public ConfigEntry<bool> affectItemEntry;
     public ConfigEntry<bool> affectLightEntry;
+    public ConfigEntry<bool> affectSunLightEntry;
 
     private void Awake()
     {
         instance = this;
 
         Logger.LogInfo("RandomColors starting....");
+
+        affectSunLightEntry = Config.Bind("General", "AffectSunLight", false,
+            "Sun light have a random color every day. No need to restart the game :)");
+        CreateBoolConfig(affectSunLightEntry);
 
         affectLightEntry = Config.Bind("General", "AffectLights", true,
             "Every lights in the game have a random color every day. No need to restart the game :)");

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HarmonyLib;
 using UnityEngine;
 
@@ -11,12 +12,29 @@ public class PatchRoundManager
     [HarmonyPostfix]
     private static void PatchLoadLevel(RoundManager __instance)
     {
-        if (RandomColorsPlugin.instance.affectLightEntry.Value)
-        {
-            var lights = Object.FindObjectsOfType<Light>().ToList();
+        if (!RandomColorsPlugin.instance.affectLightEntry.Value) return;
 
-            foreach (var light in lights)
-                light.color = RandomColorsPlugin.instance.GetRandomColor(light.color.a);
+        //SUN LIGHT AFFECT
+        var noAffectedId = new List<int>();
+
+        if (!RandomColorsPlugin.instance.affectSunLightEntry.Value)
+        {
+            var animatedSun = Object.FindObjectOfType<animatedSun>();
+            if (animatedSun != null)
+            {
+                noAffectedId.Add(animatedSun.directLight.gameObject.GetInstanceID());
+                noAffectedId.Add(animatedSun.indirectLight.gameObject.GetInstanceID());
+            }
+        }
+
+        //EVERY LIGHTS AFFECT
+
+        var lights = Object.FindObjectsOfType<Light>().ToList();
+
+        foreach (var light in lights)
+        {
+            if (noAffectedId.Contains(light.gameObject.GetInstanceID())) return;
+            light.color = RandomColorsPlugin.instance.GetRandomColor(light.color.a);
         }
     }
 }
