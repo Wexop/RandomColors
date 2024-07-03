@@ -29,11 +29,11 @@ public class PatchRoundManager
 
         //EVERY LIGHTS AFFECT
 
-        var lights = Object.FindObjectsOfType<Light>().ToList();
+        var lights = Object.FindObjectsOfType<Light>(true).ToList();
 
         foreach (var light in lights)
         {
-            if (noAffectedId.Contains(light.gameObject.GetInstanceID())) return;
+            if (noAffectedId.Contains(light.gameObject.GetInstanceID()) || light.name == "NightVision") return;
             light.color = RandomColorsPlugin.instance.GetRandomColor(light.color.a);
         }
     }

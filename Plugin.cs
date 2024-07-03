@@ -18,7 +18,9 @@ public class RandomColorsPlugin : BaseUnityPlugin
     private const string VERSION = "1.0.0";
 
     public static RandomColorsPlugin instance;
+    public ConfigEntry<bool> AffectCruiserEntry;
     public ConfigEntry<bool> affectEnemyEntry;
+    public ConfigEntry<bool> affectFlashLight;
     public ConfigEntry<bool> affectItemEntry;
     public ConfigEntry<bool> affectLightEntry;
     public ConfigEntry<bool> affectSunLightEntry;
@@ -37,6 +39,10 @@ public class RandomColorsPlugin : BaseUnityPlugin
             "Every lights in the game have a random color every day. No need to restart the game :)");
         CreateBoolConfig(affectLightEntry);
 
+        affectFlashLight = Config.Bind("General", "AffectFlashLight", true,
+            "Every flashlights object have a random color on spawn. No need to restart the game :)");
+        CreateBoolConfig(affectFlashLight);
+
         affectItemEntry = Config.Bind("General", "AffectItems", true,
             "Every grabbable items in the game have a random color on spawn. No need to restart the game :)");
         CreateBoolConfig(affectItemEntry);
@@ -45,9 +51,14 @@ public class RandomColorsPlugin : BaseUnityPlugin
             "Every monsters in the game have a random color on spawn. No need to restart the game :)");
         CreateBoolConfig(affectEnemyEntry);
 
+        AffectCruiserEntry = Config.Bind("General", "AffectCruiser", true,
+            "Every cruiser in the game have a random color on spawn. No need to restart the game :)");
+        CreateBoolConfig(AffectCruiserEntry);
+
         Harmony.CreateAndPatchAll(typeof(PatchRoundManager));
         Harmony.CreateAndPatchAll(typeof(PatchGrabbableObject));
         Harmony.CreateAndPatchAll(typeof(PatchEnemyAi));
+        Harmony.CreateAndPatchAll(typeof(PatchVehiculeControler));
         Logger.LogInfo("RandomColors is patched!");
     }
 

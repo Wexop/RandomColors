@@ -1,6 +1,5 @@
-﻿using System.Linq;
-using HarmonyLib;
-using UnityEngine;
+﻿using HarmonyLib;
+using RandomColors.utils;
 
 namespace RandomColors.Patchs;
 
@@ -14,10 +13,6 @@ public class PatchEnemyAi
         if (!RandomColorsPlugin.instance.affectEnemyEntry.Value ||
             __instance.enemyType.enemyName.Contains("Locust Bees")) return;
 
-        var materials = __instance.gameObject.GetComponentsInChildren<Renderer>().ToList();
-        materials.Add(__instance.gameObject.GetComponent<Renderer>());
-        foreach (var material in materials)
-            if (material != null && material.material != null)
-                material.material.color = RandomColorsPlugin.instance.GetRandomColor(material.material.color.a);
+        UtilsFunctions.ChangeGameObject(__instance.gameObject);
     }
 }
