@@ -16,7 +16,7 @@ public class PatchRoundManager
             var lights = Object.FindObjectsOfType<Light>().ToList();
 
             foreach (var light in lights)
-                light.color = RandomColorsPlugin.instance.GetRandomColor();
+                light.color = RandomColorsPlugin.instance.GetRandomColor(light.color.a);
         }
     }
 }
