@@ -13,7 +13,7 @@ public class PatchGrabbableObject
         if (!RandomColorsPlugin.instance.affectItemEntry.Value) return;
         if (!RandomColorsPlugin.instance.affectFlashLight.Value &&
             (__instance.gameObject.name.Contains("Flashlight") ||
-             __instance.gameObject.name.Contains("LaserPointer"))) ;
+             __instance.gameObject.name.Contains("LaserPointer"))) return;
 
         UtilsFunctions.ChangeGameObject(__instance.gameObject);
     }
