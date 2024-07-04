@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using RandomColors.utils;
 using UnityEngine;
 
 namespace RandomColors.Patchs;
@@ -14,7 +15,7 @@ public class PatchRoundManager
     {
         if (!RandomColorsPlugin.instance.affectLightEntry.Value) return;
 
-        //SUN LIGHT AFFECT
+        //SUNLIGHT AFFECT
         var noAffectedId = new List<int>();
 
         if (!RandomColorsPlugin.instance.affectSunLightEntry.Value)
@@ -34,7 +35,7 @@ public class PatchRoundManager
         foreach (var light in lights)
         {
             if (noAffectedId.Contains(light.gameObject.GetInstanceID()) || light.name == "NightVision") return;
-            light.color = RandomColorsPlugin.instance.GetRandomColor(light.color.a);
+            light.color = UtilsFunctions.GetRandomColor(light.color.a);
         }
     }
 }

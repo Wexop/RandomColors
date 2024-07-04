@@ -12,13 +12,24 @@ public class UtilsFunctions
         foreach (var material in materials)
             if (material != null && material.material != null)
                 foreach (var m in material.materials)
-                    m.color = RandomColorsPlugin.instance.GetRandomColor(material.material.color.a);
+                    m.color = GetRandomColor(material.material.color.a);
 
         if (!RandomColorsPlugin.instance.affectLightEntry.Value) return;
         var lights = gameObject.GetComponentsInChildren<Light>(true).ToList();
         lights.AddRange(gameObject.GetComponents<Light>());
         foreach (var light in lights)
             if (light != null && light.color != null)
-                light.color = RandomColorsPlugin.instance.GetRandomColor(light.color.a);
+                light.color = GetRandomColor(light.color.a);
+    }
+
+    public static float RandomZeroToOne()
+    {
+        return Random.Range(0f, 1f);
+    }
+
+    public static Color GetRandomColor(float initialAlpha = 1f)
+    {
+        return new Color(RandomZeroToOne(),
+            RandomZeroToOne(), RandomZeroToOne(), initialAlpha);
     }
 }

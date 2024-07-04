@@ -62,17 +62,6 @@ public class RandomColorsPlugin : BaseUnityPlugin
         Logger.LogInfo("RandomColors is patched!");
     }
 
-    public float RandomZeroToOne()
-    {
-        return Random.Range(0f, 1f);
-    }
-
-    public Color GetRandomColor(float initialAlpha = 1f)
-    {
-        return new Color(RandomZeroToOne(),
-            RandomZeroToOne(), RandomZeroToOne(), initialAlpha);
-    }
-
     private void CreateBoolConfig(ConfigEntry<bool> configEntry)
     {
         var exampleSlider = new BoolCheckBoxConfigItem(configEntry, new BoolCheckBoxOptions
