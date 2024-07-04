@@ -9,21 +9,31 @@ public class UtilsFunctions
     public static void ChangeGameObject(GameObject gameObject)
     {
         Color? emessiveColorFound = null;
+        Material materialEmissive = null;
 
         var renderers = gameObject.GetComponentsInChildren<Renderer>(true).ToList();
         renderers.AddRange(gameObject.GetComponents<Renderer>());
         foreach (var renderer in renderers)
-            if (renderer != null && renderer.material != null)
+            if (renderer != null && renderer.material != null && !renderer.gameObject.name.Contains("MapDot"))
                 foreach (var m in renderer.materials)
                 {
+                    if (!m.HasColor("_Color")) continue;
                     var color = GetRandomColor(m.color.a);
-                    m.color = color;
+
+                    if (gameObject.name.Contains("RadMech"))
+                    {
+                        if (emessiveColorFound.HasValue) color = emessiveColorFound.Value;
+                        else
+                            emessiveColorFound = color;
+                    }
+
+
                     try
                     {
+                        m.color = color;
                         var emissiveColor = m.GetColor("_EmissiveColor");
-                        if (!colorDark(emissiveColor))
+                        if (emissiveColor != null && !colorDark(emissiveColor))
                         {
-                            Debug.Log($"{emissiveColor} IS DARK");
                             if (!emessiveColorFound.HasValue)
                                 emessiveColorFound = color;
                             else
@@ -31,6 +41,7 @@ public class UtilsFunctions
 
                             color.a = emissiveColor.a;
                             m.SetColor("_EmissiveColor", color);
+                            if (materialEmissive == null) materialEmissive = new Material(m);
                         }
                     }
                     catch
@@ -49,17 +60,13 @@ public class UtilsFunctions
                     light.color = emessiveColorFound.Value;
                 else
                     light.color = GetRandomColor(light.color.a);
-
-                Debug.Log($"ITEM {gameObject.name} HAVE LIGHT {light.color}");
             }
 
         var flashlightItem = gameObject.GetComponent<FlashlightItem>();
-        if (flashlightItem != null && emessiveColorFound.HasValue)
+        if (flashlightItem != null && emessiveColorFound.HasValue && materialEmissive != null)
         {
-            var material = new Material(flashlightItem.bulbLight);
-            material.color = emessiveColorFound.Value;
-            flashlightItem.bulbDark = material;
-            flashlightItem.bulbLight = material;
+            flashlightItem.bulbDark = materialEmissive;
+            flashlightItem.bulbLight = materialEmissive;
         }
     }
 
@@ -76,12 +83,8 @@ public class UtilsFunctions
 
     public static bool colorDark(Color color)
     {
-        Debug.Log($"COLOR CATCHED {color.r} {color.g} {color.b}");
-        if (color.r < 3f && color.g < 3f && color.b < 3f)
-        {
-            Debug.Log(true);
-            return true;
-        }
+        //Debug.Log($"COLOR CATCHED {color.r} {color.g} {color.b}");
+        if (color.r < 2f && color.g < 2f && color.b < 2f) return true;
 
         return false;
     }

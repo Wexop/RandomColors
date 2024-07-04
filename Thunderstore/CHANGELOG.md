@@ -1,5 +1,11 @@
 # Changelog
 
+### v1.0.2
+
+- Fix affectFlashLight config
+- Emissive colors (Apparatus middle light, flashlights, old bird eye...) are now affected to be more coherent with light
+  sources
+
 ### v1.0.1
 
 - Fix transparent items

@@ -5,8 +5,6 @@ using LethalConfig;
 using LethalConfig.ConfigItems;
 using LethalConfig.ConfigItems.Options;
 using RandomColors.Patchs;
-using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace RandomColors;
 
@@ -15,7 +13,7 @@ public class RandomColorsPlugin : BaseUnityPlugin
 {
     private const string GUID = "wexop.randomcolors";
     private const string NAME = "RandomColors";
-    private const string VERSION = "1.0.1";
+    private const string VERSION = "1.0.2";
 
     public static RandomColorsPlugin instance;
     public ConfigEntry<bool> AffectCruiserEntry;
