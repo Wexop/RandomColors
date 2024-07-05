@@ -13,7 +13,7 @@ public class PatchRoundManager
     [HarmonyPostfix]
     private static void PatchLoadLevel(RoundManager __instance)
     {
-        if (!RandomColorsPlugin.instance.affectLightEntry.Value) return;
+        if (!RandomColorsPlugin.instance.affectLightEntry.Value || !UtilsFunctions.CanChangeColor()) return;
 
         //SUNLIGHT AFFECT
         var noAffectedId = new List<int>();

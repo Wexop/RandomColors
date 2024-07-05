@@ -26,12 +26,17 @@ public class RandomColorsPlugin : BaseUnityPlugin
     public ConfigEntry<bool> affectItemEntry;
     public ConfigEntry<bool> affectLightEntry;
     public ConfigEntry<bool> affectSunLightEntry;
+    public ConfigEntry<float> chanceRandomColorEntry;
 
     private void Awake()
     {
         instance = this;
 
         Logger.LogInfo("RandomColors starting....");
+
+        chanceRandomColorEntry = Config.Bind("General", "ChanceRandomColor", 100f,
+            "Chance for anything that this mod affect to have random color. No need to restart the game :)");
+        CreateFloatConfig(chanceRandomColorEntry);
 
         affectSunLightEntry = Config.Bind("General", "AffectSunLight", false,
             "Sun light have a random color every day. No need to restart the game :)");
@@ -77,6 +82,17 @@ public class RandomColorsPlugin : BaseUnityPlugin
         var exampleSlider = new BoolCheckBoxConfigItem(configEntry, new BoolCheckBoxOptions
         {
             RequiresRestart = false
+        });
+        LethalConfigManager.AddConfigItem(exampleSlider);
+    }
+
+    private void CreateFloatConfig(ConfigEntry<float> configEntry, float min = 0f, float max = 100f)
+    {
+        var exampleSlider = new FloatSliderConfigItem(configEntry, new FloatSliderOptions
+        {
+            RequiresRestart = false,
+            Min = min,
+            Max = max
         });
         LethalConfigManager.AddConfigItem(exampleSlider);
     }

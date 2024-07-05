@@ -8,6 +8,9 @@ public class UtilsFunctions
 {
     public static void ChangeGameObject(GameObject gameObject)
     {
+        
+        if(!CanChangeColor()) return;
+        
         Color? emessiveColorFound = null;
         Material materialEmissive = null;
 
@@ -72,7 +75,6 @@ public class UtilsFunctions
         if (flashlightItem != null && emessiveColorFound.HasValue && materialEmissive != null)
         {
             RandomColorsPlugin.instance.SaveObjectColor(flashlightItem.gameObject);
-            flashlightItem.bulbDark = materialEmissive;
             flashlightItem.bulbLight = materialEmissive;
         }
     }
@@ -94,5 +96,11 @@ public class UtilsFunctions
         if (color.r < 2f && color.g < 2f && color.b < 2f) return true;
 
         return false;
+    }
+
+    public static bool CanChangeColor()
+    {
+        var random = Random.Range(0f, 100f);
+        return RandomColorsPlugin.instance.chanceRandomColorEntry.Value >= random;
     }
 }
