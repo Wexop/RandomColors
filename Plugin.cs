@@ -60,7 +60,15 @@ public class RandomColorsPlugin : BaseUnityPlugin
         Harmony.CreateAndPatchAll(typeof(PatchRoundManager));
         Harmony.CreateAndPatchAll(typeof(PatchGrabbableObject));
         Harmony.CreateAndPatchAll(typeof(PatchEnemyAi));
-        Harmony.CreateAndPatchAll(typeof(PatchVehiculeControler));
+        try
+        {
+            Harmony.CreateAndPatchAll(typeof(PatchVehiculeControler));
+        }
+        catch
+        {
+            Logger.LogWarning("COULD NOT LOAD VEHICULE CONTROLLER, THIS CAN HAPPEN IF YOU ARE ON VERSION < 55");
+        }
+
         Logger.LogInfo("RandomColors is patched!");
     }
 
