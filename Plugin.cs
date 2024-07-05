@@ -15,7 +15,7 @@ public class RandomColorsPlugin : BaseUnityPlugin
 {
     private const string GUID = "wexop.randomcolors";
     private const string NAME = "RandomColors";
-    private const string VERSION = "1.0.3";
+    private const string VERSION = "1.0.4";
 
     public static RandomColorsPlugin instance;
 

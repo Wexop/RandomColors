@@ -1,6 +1,6 @@
 {
   "name": "RandomColors",
-  "version_number": "1.0.3",
+  "version_number": "1.0.4",
   "website_url": "https://github.com/Wexop/RandomColors",
   "description": "[V55] Items, monsters and every lights sources have now a random color !",
   "dependencies": [

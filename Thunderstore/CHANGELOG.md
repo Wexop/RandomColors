@@ -1,5 +1,9 @@
 # Changelog
 
+### v1.0.4
+
+- Fix an issue where every outdoor light sources are not affected
+
 ### v1.0.3
 
 - Fix an issue that make flashlights having a random light color every day, it now save the color on spawn
