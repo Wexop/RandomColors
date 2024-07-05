@@ -1,5 +1,12 @@
 # Changelog
 
+### v1.0.3
+
+- Fix an issue that make flashlights having a random light color every day, it now save the color on spawn
+- Add a chance of random color config (0 is never, 100 is always)
+- Add a theme config with 4 themes : **default** (any rgb color), **colorful** (any light color), **dark** (any dark
+  color), **neon** (change emissive color of textures)
+
 ### v1.0.2
 
 - Fix affectFlashLight config

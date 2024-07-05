@@ -122,6 +122,6 @@ public class UtilsFunctions
     public static bool CanChangeColor()
     {
         var random = Random.Range(0f, 100f);
-        return RandomColorsPlugin.instance.chanceRandomColorEntry.Value >= random;
+        return RandomColorsPlugin.instance.chanceRandomColorEntry.Value > random;
     }
 }
