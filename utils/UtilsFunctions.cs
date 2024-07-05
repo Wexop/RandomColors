@@ -8,9 +8,8 @@ public class UtilsFunctions
 {
     public static void ChangeGameObject(GameObject gameObject)
     {
-        
-        if(!CanChangeColor()) return;
-        
+        if (!CanChangeColor()) return;
+
         Color? emessiveColorFound = null;
         Material materialEmissive = null;
 
@@ -46,6 +45,10 @@ public class UtilsFunctions
                             m.SetColor("_EmissiveColor", color);
                             RandomColorsPlugin.instance.SaveObjectColor(renderer.gameObject);
                             if (materialEmissive == null) materialEmissive = new Material(m);
+                        }
+                        else if (RandomColorsPlugin.instance.themeChoiceEntry.Value == "neon" && emissiveColor != null)
+                        {
+                            m.SetColor("_EmissiveColor", color);
                         }
                     }
                     catch
@@ -84,10 +87,28 @@ public class UtilsFunctions
         return Random.Range(0f, 1f);
     }
 
+    public static float RandomLightColorFloat()
+    {
+        return Random.Range(0.75f, 1f);
+    }
+
+    public static float RandomDarkColorFloat()
+    {
+        return Random.Range(0f, 0.25f);
+    }
+
     public static Color GetRandomColor(float initialAlpha = 1f)
     {
-        return new Color(RandomZeroToOne(),
+        var theme = RandomColorsPlugin.instance.themeChoiceEntry.Value;
+
+        var baseColor = new Color(RandomZeroToOne(),
             RandomZeroToOne(), RandomZeroToOne(), initialAlpha);
+
+        if (theme == "colorful") baseColor[Random.Range(0, 4)] = RandomLightColorFloat();
+        if (theme == "dark")
+            baseColor = new Color(RandomDarkColorFloat(), RandomDarkColorFloat(), RandomDarkColorFloat());
+
+        return baseColor;
     }
 
     public static bool colorDark(Color color)

@@ -20,6 +20,15 @@ public class RandomColorsPlugin : BaseUnityPlugin
     public static RandomColorsPlugin instance;
 
     public List<int> saveObjectColorList = new();
+
+    public string[] themes =
+    {
+        "default",
+        "colorful",
+        "dark",
+        "neon"
+    };
+
     public ConfigEntry<bool> AffectCruiserEntry;
     public ConfigEntry<bool> affectEnemyEntry;
     public ConfigEntry<bool> affectFlashLight;
@@ -27,6 +36,7 @@ public class RandomColorsPlugin : BaseUnityPlugin
     public ConfigEntry<bool> affectLightEntry;
     public ConfigEntry<bool> affectSunLightEntry;
     public ConfigEntry<float> chanceRandomColorEntry;
+    public ConfigEntry<string> themeChoiceEntry;
 
     private void Awake()
     {
@@ -62,6 +72,10 @@ public class RandomColorsPlugin : BaseUnityPlugin
             "Every cruiser in the game have a random color on spawn. No need to restart the game :)");
         CreateBoolConfig(AffectCruiserEntry);
 
+        themeChoiceEntry = Config.Bind("General", "Theme", "default",
+            "Choose your theme ! default : any rgb color, colorful : light colors, dark : dark colors, neon : affect emissive texture color. No need to restart the game :)");
+        CreateDropdownConfig(themeChoiceEntry, themes);
+
         Harmony.CreateAndPatchAll(typeof(PatchRoundManager));
         Harmony.CreateAndPatchAll(typeof(PatchGrabbableObject));
         Harmony.CreateAndPatchAll(typeof(PatchEnemyAi));
@@ -93,6 +107,16 @@ public class RandomColorsPlugin : BaseUnityPlugin
             RequiresRestart = false,
             Min = min,
             Max = max
+        });
+        LethalConfigManager.AddConfigItem(exampleSlider);
+    }
+
+    private void CreateDropdownConfig(ConfigEntry<string> configEntry, string[] values)
+    {
+        var exampleSlider = new TextDropDownConfigItem(configEntry, new TextDropDownOptions
+        {
+            RequiresRestart = false,
+            Values = values
         });
         LethalConfigManager.AddConfigItem(exampleSlider);
     }
