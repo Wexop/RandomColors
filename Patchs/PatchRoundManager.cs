@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using HarmonyLib;
 using RandomColors.utils;
 using UnityEngine;
+using Enumerable = System.Linq.Enumerable;
 
 namespace RandomColors.Patchs;
 
@@ -30,11 +30,12 @@ public class PatchRoundManager
 
         //EVERY LIGHTS AFFECT
 
-        var lights = Object.FindObjectsOfType<Light>(true).ToList();
+        var lights = Enumerable.ToList(Object.FindObjectsOfType<Light>(true));
 
         foreach (var light in lights)
         {
-            if (noAffectedId.Contains(light.gameObject.GetInstanceID()) || light.name == "NightVision") return;
+            if (noAffectedId.Contains(light.gameObject.GetInstanceID()) || light.name == "NightVision" ||
+                RandomColorsPlugin.instance.saveObjectColorList.Contains(light.gameObject.GetInstanceID())) return;
             light.color = UtilsFunctions.GetRandomColor(light.color.a);
         }
     }

@@ -1,10 +1,12 @@
-﻿using BepInEx;
+﻿using System.Collections.Generic;
+using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
 using LethalConfig;
 using LethalConfig.ConfigItems;
 using LethalConfig.ConfigItems.Options;
 using RandomColors.Patchs;
+using UnityEngine;
 
 namespace RandomColors;
 
@@ -16,6 +18,8 @@ public class RandomColorsPlugin : BaseUnityPlugin
     private const string VERSION = "1.0.2";
 
     public static RandomColorsPlugin instance;
+
+    public List<int> saveObjectColorList = new();
     public ConfigEntry<bool> AffectCruiserEntry;
     public ConfigEntry<bool> affectEnemyEntry;
     public ConfigEntry<bool> affectFlashLight;
@@ -67,5 +71,11 @@ public class RandomColorsPlugin : BaseUnityPlugin
             RequiresRestart = false
         });
         LethalConfigManager.AddConfigItem(exampleSlider);
+    }
+
+    public void SaveObjectColor(GameObject gameObject)
+    {
+        var id = gameObject.GetInstanceID();
+        if (!saveObjectColorList.Contains(id)) saveObjectColorList.Add(id);
     }
 }

@@ -41,6 +41,7 @@ public class UtilsFunctions
 
                             color.a = emissiveColor.a;
                             m.SetColor("_EmissiveColor", color);
+                            RandomColorsPlugin.instance.SaveObjectColor(renderer.gameObject);
                             if (materialEmissive == null) materialEmissive = new Material(m);
                         }
                     }
@@ -57,14 +58,20 @@ public class UtilsFunctions
             if (light != null && light.color != null)
             {
                 if (emessiveColorFound.HasValue)
+                {
                     light.color = emessiveColorFound.Value;
+                    RandomColorsPlugin.instance.SaveObjectColor(light.gameObject);
+                }
                 else
+                {
                     light.color = GetRandomColor(light.color.a);
+                }
             }
 
         var flashlightItem = gameObject.GetComponent<FlashlightItem>();
         if (flashlightItem != null && emessiveColorFound.HasValue && materialEmissive != null)
         {
+            RandomColorsPlugin.instance.SaveObjectColor(flashlightItem.gameObject);
             flashlightItem.bulbDark = materialEmissive;
             flashlightItem.bulbLight = materialEmissive;
         }
