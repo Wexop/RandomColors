@@ -13,7 +13,7 @@ public class PatchRoundManager
     [HarmonyPostfix]
     private static void PatchLoadLevel(RoundManager __instance)
     {
-        if (!RandomColorsPlugin.instance.affectLightEntry.Value || !UtilsFunctions.CanChangeColor()) return;
+        if (!RandomColorsPlugin.instance.affectLightEntry.Value) return;
 
         //SUNLIGHT AFFECT
         var noAffectedId = new List<int>();
@@ -34,8 +34,13 @@ public class PatchRoundManager
 
         foreach (var light in lights)
         {
-            if (noAffectedId.Contains(light.gameObject.GetInstanceID()) || light.name == "NightVision" ||
-                RandomColorsPlugin.instance.saveObjectColorList.Contains(light.gameObject.GetInstanceID())) return;
+            if (
+                noAffectedId.Contains(light.gameObject.GetInstanceID())
+                || light.name == "NightVision"
+                || RandomColorsPlugin.instance.saveObjectColorList.Contains(light.gameObject.GetInstanceID())
+                || !UtilsFunctions.CanChangeColor()
+            ) continue;
+
             light.color = UtilsFunctions.GetRandomColor(light.color.a);
         }
     }
