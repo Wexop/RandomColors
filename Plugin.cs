@@ -79,6 +79,7 @@ public class RandomColorsPlugin : BaseUnityPlugin
         Harmony.CreateAndPatchAll(typeof(PatchRoundManager));
         Harmony.CreateAndPatchAll(typeof(PatchGrabbableObject));
         Harmony.CreateAndPatchAll(typeof(PatchEnemyAi));
+        Harmony.CreateAndPatchAll(typeof(PatchFlashLight));
         try
         {
             Harmony.CreateAndPatchAll(typeof(PatchVehiculeControler));
